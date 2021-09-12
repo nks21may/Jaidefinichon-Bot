@@ -4,9 +4,8 @@ const { Routes } = require('discord-api-types/v9');
 const { clientId, guildId, token } = require('./config.json');
 
 const commands = [
-	new SlashCommandBuilder().setName('nico').setDescription('Replies with pong!'),
-	new SlashCommandBuilder().setName('nico2').setDescription('Replies with server info!'),
-	new SlashCommandBuilder().setName('nico3').setDescription('Replies with user info!'),
+	new SlashCommandBuilder().setName('arrancajulian').setDescription('Prende la maquina de memes'),
+	new SlashCommandBuilder().setName('yamete').setDescription('La corta con los memes'),
 ]
 	.map(command => command.toJSON());
 

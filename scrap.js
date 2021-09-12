@@ -1,22 +1,25 @@
 const https = require('https');
 
-let options = {
+const options = {
 	host: 'jaidefinichon.com',
 	port: 443,
 	path: '/page/',
 };
 
-const regex = /(https:\/\/jaidefinichon\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/)/g;
+const regex = /(https:\/\/jaidefinichon\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/[A-Za-z0-9_-]+\.((jpg)|(png)))/g;
 
 let links = [];
 
-function getImage() {
-	if (links.length === 0) loadMoreLinks();
-	return links.pop();
-}
+const getMeme = () => {
+	const url = links.pop();
+	if (links.length === 0) {
+		loadMoreLinks();
+	}
+	return url;
+};
 
-function loadMoreLinks(page) {
-	const n = (page) ? page : 1;
+const loadMoreLinks = (page) => {
+	const n = (page) ? page : Math.floor(Math.random() * (3000 - 2)) + 2;
 	options.path = '/page/' + n + '/';
 
 	https.get(options, function(res) {
@@ -27,10 +30,11 @@ function loadMoreLinks(page) {
 
 		res.on('end', () => {
 			links = data.match(regex);
+			links.pop();
 		});
-	}).on('error', function (e) {
+	}).on('error', function(e) {
 		console.log('Got error: ' + e.message);
 	});
-}
+};
 
-getImage();
+module.exports = { getMeme, loadMoreLinks } ;
